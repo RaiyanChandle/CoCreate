@@ -1,0 +1,44 @@
+"use client"
+
+import { ClerkProvider, useAuth } from "@clerk/nextjs";
+import { ConvexProviderWithClerk } from "convex/react-clerk";
+import {
+    AuthLoading,
+    Authenticated,
+    ConvexReactClient,
+} from "convex/react";
+import { Loading } from "../components/auth/loading";
+
+interface ConvexClientProviderProps {
+    children: React.ReactNode;
+};
+
+const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL!;
+
+const convex = new ConvexReactClient(convexUrl);
+
+import { usePathname } from "next/navigation";
+
+export const ConvexClientProvider = ({
+    children,
+}: ConvexClientProviderProps) => {
+    const pathname = usePathname();
+    const isPublic = pathname === "/" || pathname === "/signin";
+    return (
+        <ClerkProvider>
+            <ConvexProviderWithClerk useAuth={useAuth} client={convex}>
+                {isPublic ? (
+                    children
+                ) : (
+                    <>
+                        <AuthLoading>
+                            <Loading />
+                        </AuthLoading>
+                        <Authenticated>{children}</Authenticated>
+                    </>
+                )}
+            </ConvexProviderWithClerk>
+        </ClerkProvider>
+    );
+}
+
