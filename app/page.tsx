@@ -2,6 +2,6 @@
 
 export default function Home() {
   return (
-    <p>demo merge</p>
+    <p>demo merg</p>
   );
 }
