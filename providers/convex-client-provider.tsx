@@ -8,6 +8,7 @@ import {
     ConvexReactClient,
 } from "convex/react";
 import { Loading } from "../components/auth/loading";
+import { usePathname } from "next/navigation";
 
 interface ConvexClientProviderProps {
     children: React.ReactNode;
@@ -17,13 +18,13 @@ const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL!;
 
 const convex = new ConvexReactClient(convexUrl);
 
-import { usePathname } from "next/navigation";
+
 
 export const ConvexClientProvider = ({
     children,
 }: ConvexClientProviderProps) => {
     const pathname = usePathname();
-    const isPublic = pathname === "/" || pathname === "/signin";
+    const isPublic = pathname === "/" || pathname === "/signin" || pathname === "/sign-up";
     return (
         <ClerkProvider>
             <ConvexProviderWithClerk useAuth={useAuth} client={convex}>

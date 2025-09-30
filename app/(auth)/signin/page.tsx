@@ -18,7 +18,10 @@ export default function Signin() {
       <SignedIn />
       <SignedOut>
         <div className="flex min-h-screen items-center justify-center">
-          <SignIn routing="hash" />
+          <SignIn
+            routing="hash"   
+            signUpUrl="/sign-up" 
+          />
         </div>
       </SignedOut>
     </>
